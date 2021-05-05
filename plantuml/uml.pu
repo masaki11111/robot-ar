@@ -1,0 +1,165 @@
+@startuml robot-ar
+title robot-ar
+package Enemy{
+    class EnemyCreation {
+
+        + Text HPText
+        + Text Point
+        HP=0
+        - int HP
+        EnemyNum=0
+        + int EnemyNum
+        GunPoint = 0
+        + int GunPoint
+        SuperAtttackpoint = 0
+        + int SuperAtttackpoint
+        + GameObject GreenMonster
+        + GameObject SphereRobot
+        + GameObject Gundam
+        + GameObject Pepper
+
+        + Transform ImageTarget
+        + Transform EnemyPoint1
+        + Transform EnemyPoint2
+        + Transform EnemyPoint3
+        + Transform EnemyPoint4
+
+        + ButtonState StartButton
+
+        + GameObject Timer
+
+        - string name
+
+        + void KillAndRevival()
+    }
+
+    class EnemyManager {
+        - string name
+        - GameObject target
+        - NavMeshAgent agent
+        - AudioSource Walk
+    }
+}
+
+package Player{
+
+    class PlayerMover{
+        + float speed
+        - Vector3 latestPos
+        + FixedJoystick joystick
+    
+    }
+
+    class LightAttackManager{
+        + ButtonState buttonA
+        - GameObject Flame
+        - ParticleSystem FlameThrower
+        - BoxCollider FlameCollider
+        - float FlameLength
+        - float FlamePosition
+        + AudioSource FlameAudio
+
+    }
+
+    class SuperAttackManager{
+        + ButtonState buttonB  
+        - GameObject Earth
+        - int superAttackPoint
+        - ParticleSystem EarthShatter1
+        - ParticleSystem EarthShatter2
+        - ParticleSystem EarthShatter3
+        - ParticleSystem EarthShatter4
+        - ParticleSystem EarthShatter5
+        - ParticleSystem EarthShatter6
+        - ParticleSystem EarthShatter7
+        - ParticleSystem EarthShatter8
+        - BoxCollider EarthCollider
+        - float EarthLength
+        + GameObject superAttackButton
+        - GameObject superAttackTrigger
+        + AudioSource superAttackAudio
+        + AudioSource superAttackButtonAudio
+        - EnemyCreation enemyCreation
+        - int eHit
+        - int count
+        - Animator SuperAttackImageCutin
+        - PostProcessVolume postProcessVolume
+        - ColorGrading _colorGrading
+        + float timeOut
+        - float timeElapsed
+        - bool waitforcutin
+        eHitの値を引き継ぐ
+        - int _eHit
+        - IEnumerator SuperAttack()
+
+    
+    }
+
+    class EnemyHit{
+        damage=10
+        - int damage
+        攻撃が当たったときのダメージの数値
+        point = 0
+        - int point
+        - Collider leftFootCollider
+        ダメージが当たったときの効果音
+        + AudioSource Hit
+        + AudioClip impact
+        敵の位置
+        - Vector3 EnemyPos
+        - Vector3 HitPos
+        ダメージが当たったときのエフェクト
+        + GameObject HitParticleObject
+        + Transform ImageTarget
+
+        - void OnTriggerEnter()
+
+
+    }
+
+}
+
+package UI{
+    class DisplayMenu{
+        - GameObject Menu
+        isDisplay = true
+        - bool isDisplay
+        + void Togglemenu()
+    }
+
+    class Loading{
+        非同期動作で使用する
+        - AsyncOperation async
+        シーンロード中に表示するUI画面
+        - GameObject loadUI
+        読み込み率を表示するスライダー
+        - Slider slider
+
+        バトルシーンへの遷移
+        + void ToBattle()
+
+        - IEnumerator LoadingBattle()
+
+        + void ToLookingCharacter()
+
+        - IEnumerator LoadingLookingCharacter()
+        + void ToMenu()
+
+        -IEnumerator LoadingMenu()
+
+    }
+
+    class ProgressBarCircle{
+        + float TimeLimit
+    }
+    class Timer{
+    + GameObject Menu
+	+ ProgressBarCircle PbC
+	+ AudioSource BattleAudio
+    }
+}
+
+EnemyHit -- EnemyCreation
+Timer -- ProgressBarCircle
+Timer -- EnemyCreation
+@enduml
