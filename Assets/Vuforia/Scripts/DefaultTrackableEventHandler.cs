@@ -25,14 +25,17 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected TrackableBehaviour mTrackableBehaviour;
     protected TrackableBehaviour.Status m_PreviousStatus;
     protected TrackableBehaviour.Status m_NewStatus;
-    bool pSwitch = true;
+    //bool pSwitch = true;
     bool pAppearanceAnimationSwitch = false;
     public GameObject pepperPresence;
     ParticleSystem pepperPresenceAnimation;
     //ペッパーが出たときの音
     public AudioSource pepperPresenceAudio;
+    public GameObject pepperColor;
     public Material PepperMaterial;
-
+    public GameObject spotLight;
+    bool pAppearanceLightSwitch = false;
+    //bool pAppearanceSwitch = true;
     //pepperが出たときにマーカーをペッパーがいないのものに差し替える
     //public Texture NormalmapTexture;
     //public Material TargetMaterial;
@@ -50,10 +53,17 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         Debug.Log("Start");
 
         //ペッパーを透明にしておく
+        pepperColor.SetActive(false);
         PepperMaterial.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0f / 255f);
+
+        //ペッパー出現時のライト
+        spotLight.GetComponent<Light>().spotAngle = 1;
 
         //ペッパーがいないマーカーを透明にしておく
         PostGround.GetComponent<SpriteRenderer>().color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0 / 255f);
+        //var childTransform = GameObject.Find("PepperColor").GetComponentsInChildren<Transform>();
+
+        pepperPresenceAnimation = pepperPresence.GetComponent<ParticleSystem>();
 
     }
 
@@ -61,7 +71,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     {
         if (mTrackableBehaviour)
             mTrackableBehaviour.UnregisterTrackableEventHandler(this);
-        Debug.Log("OnDestroy()");
+        //Debug.Log("OnDestroy()");
     }
 
     #endregion // UNITY_MONOBEHAVIOUR_METHODS
@@ -116,18 +126,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             var canvasComponents = mTrackableBehaviour.GetComponentsInChildren<Canvas>(true);
             Debug.Log("OnTrackingFound()");
 
-            //ペッパーくんが出現するときのアニメーションを実行
-            if (pSwitch == true)
-            {
-                pepperPresenceAnimation = pepperPresence.GetComponent<ParticleSystem>();
-                pepperPresenceAnimation.Play();
-                Debug.Log("DETATA");
-                pepperPresenceAudio.Play();
-                pAppearanceAnimationSwitch = true;
-                pSwitch = false;
-            }
-            //マーカーの画像をペッパーがいないものに変更
 
+           //キラキラカードのエフェクト
+           pAppearanceLightSwitch = true;
+       
             // Enable rendering:
             foreach (var component in rendererComponents)
                 component.enabled = true;
@@ -166,6 +168,22 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     }
     void FixedUpdate()
     {
+        if (pAppearanceLightSwitch)
+        {
+            if (spotLight.GetComponent<Light>().spotAngle < 179)
+            {
+                spotLight.GetComponent<Light>().spotAngle += 1.0f;
+            }
+            else
+            {
+                pAppearanceLightSwitch = false;
+                pepperColor.SetActive(true);
+                pepperPresenceAnimation.Play();
+                pepperPresenceAudio.Play();
+                pAppearanceAnimationSwitch = true;
+                //pSwitch = false;
+            }
+        }
         if (pAppearanceAnimationSwitch)
         {
             if (PepperMaterial.color.a < 0.0001)
@@ -193,15 +211,15 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
                         Material[] mats = child.GetComponent<Renderer>().materials;
                         mats[0] = PepperMaterial;
                         child.GetComponent<Renderer>().materials = mats;
-                    }
+                     }
                 }
             }
-        if (PostGround.GetComponent<SpriteRenderer>().color.a < 1)
-        {
-            PostGround.GetComponent<SpriteRenderer>().color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 1f / 255f);
+            if (PostGround.GetComponent<SpriteRenderer>().color.a < 1)
+            {
+                PostGround.GetComponent<SpriteRenderer>().color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 1f / 255f);
 
-        }
-            
+            }
+
 
         }
 

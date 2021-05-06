@@ -30,7 +30,7 @@ public class ProgressBarCircle : MonoBehaviour {
 
     private Image bar, barBackground,Mask;
     private float nextPlay;
-    private AudioSource audiosource;
+    //private AudioSource audiosource;
     private Text txtTitle;
     private float barValue;
     public float BarValue
@@ -52,7 +52,7 @@ public class ProgressBarCircle : MonoBehaviour {
         txtTitle = transform.Find("Text").GetComponent<Text>();
         barBackground = transform.Find("BarBackgroundCircle").GetComponent<Image>();
         bar = transform.Find("BarCircle").GetComponent<Image>();
-        audiosource = GetComponent<AudioSource>();
+        //audiosource = GetComponent<AudioSource>();
         Mask= transform.Find("Mask").GetComponent<Image>();
     }
 
@@ -113,7 +113,7 @@ public class ProgressBarCircle : MonoBehaviour {
             if (Alert >= barValue && Time.time > nextPlay)
             {
                 nextPlay = Time.time + RepearRate;
-                audiosource.PlayOneShot(sound);
+                //audiosource.PlayOneShot(sound);
             }
         }
     }

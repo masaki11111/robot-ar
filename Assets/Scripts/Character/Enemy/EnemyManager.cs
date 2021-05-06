@@ -9,7 +9,7 @@ public class EnemyManager : MonoBehaviour
     NavMeshAgent agent;
     //public Transform target;
     GameObject target;
-    private AudioSource Walk;
+    //private AudioSource Walk;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +18,9 @@ public class EnemyManager : MonoBehaviour
 
         //target = GameObject.FindGameObjectsWithTag("Player");
         target = GameObject.FindGameObjectWithTag("Player");
-        Walk = gameObject.GetComponent<AudioSource>();
+        //Walk = gameObject.GetComponent<AudioSource>();
         //GundamWalk.clip = audioClip1;
-        Walk.Play();
+        //Walk.Play();
         //GundamWalk =　AudioSource.
         //agent.destination = target.transform.position;
 

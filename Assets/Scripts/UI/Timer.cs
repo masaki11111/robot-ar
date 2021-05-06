@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Timer : MonoBehaviour {
 
@@ -12,13 +14,17 @@ public class Timer : MonoBehaviour {
 	public ProgressBarCircle PbC;
 
 	public AudioSource BattleAudio; // add
-									//public AudioSource GunAudio; 
-									// Use this for initialization
+	EnemyCreation enemyCreation;
+
+	public Text ResultPoint;
+
 	void Start()
 	{
         PbC.BarValue = 100;
         BattleAudio.Play(); //add
 		Destroy(GameObject.Find("StartButton"));
+
+		enemyCreation = GameObject.Find("EnemyManager").GetComponent<EnemyCreation>();
 
 	}
 
@@ -32,11 +38,13 @@ public class Timer : MonoBehaviour {
 
         if (PbC.BarValue <= 0)
         {
-            Debug.Log("finish");
+            //Debug.Log("finish");
             BattleAudio.Stop();//add
             Menu.SetActive(true);
-            //SceneManager.LoadScene(3);
-        }
+			//結果表示
+			ResultPoint.text = enemyCreation.EnemyNum.ToString();
+			//SceneManager.LoadScene(3);
+		}
 
     }
 }

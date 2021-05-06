@@ -47,7 +47,7 @@ package Player{
         + float speed
         - Vector3 latestPos
         + FixedJoystick joystick
-    
+
     }
 
     class LightAttackManager{
@@ -62,7 +62,7 @@ package Player{
     }
 
     class SuperAttackManager{
-        + ButtonState buttonB  
+        + ButtonState buttonB
         - GameObject Earth
         - int superAttackPoint
         - ParticleSystem EarthShatter1
@@ -92,7 +92,7 @@ package Player{
         - int _eHit
         - IEnumerator SuperAttack()
 
-    
+
     }
 
     class EnemyHit{
@@ -153,9 +153,27 @@ package UI{
         + float TimeLimit
     }
     class Timer{
-    + GameObject Menu
-	+ ProgressBarCircle PbC
-	+ AudioSource BattleAudio
+        + GameObject Menu
+        + ProgressBarCircle PbC
+        + AudioSource BattleAudio
+    }
+
+}
+package Vuforia{
+    class  DefaultTrackableEventHandler{
+        ペッパー出現時のアニメーション開始(Light⇨Animation)
+        - bool pAppearanceLightSwitch
+        - bool pAppearanceAnimationSwitch
+        ParticleSystem pepperPresenceAnimation
+        ペッパーが出たときの音
+        + AudioSource pepperPresenceAudio
+        + Material PepperMaterial
+        + GameObject pepperColor
+        + GameObject spotLight
+        + GameObject pepperPresence
+        pepperが出たときにマーカーをペッパーがいないのものに差し替える
+        + GameObject PostGround
+        OnTrackingFound()
     }
 }
 

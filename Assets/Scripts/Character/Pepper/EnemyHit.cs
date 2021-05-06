@@ -5,7 +5,7 @@ using UnityEngine;
 //
 public class EnemyHit : MonoBehaviour
 {
-    int damage = 10;
+    //int damage = 10;
     //攻撃が当たったときのダメージの数値
     int point = 1;
     private Collider leftFootCollider;

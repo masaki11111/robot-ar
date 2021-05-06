@@ -33,7 +33,7 @@ public class SuperAttackManager : MonoBehaviour
     public AudioSource superAttackAudio;
     public AudioSource superAttackButtonAudio;
     EnemyCreation enemyCreation;
-    int eHit;
+    //int eHit;
     int count;
     Animator SuperAttackImageCutin;
     //Volume SuperAttackVolume;
@@ -42,8 +42,8 @@ public class SuperAttackManager : MonoBehaviour
     public float timeOut;
     private float timeElapsed;
     bool waitforcutin;
-    //eHitの値を引き継ぐ
-    int _eHit;
+    ////eHitの値を引き継ぐ
+    //int _eHit;
 
 
 
@@ -76,12 +76,12 @@ public class SuperAttackManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //EnemyNumの値を取得
-        eHit = enemyCreation.EnemyNum;
+        ////EnemyNumの値を取得
+        //eHit = enemyCreation.EnemyNum;
         //gunPoint = enemyCreation.GunPoint;
         superAttackPoint = enemyCreation.SuperAtttackpoint;
 
-        //敵を倒して２０ポイント溜まったら必殺技を打てる様にする
+        //敵を倒して20ポイント溜まったら必殺技を打てる様にする
         if (superAttackPoint % 20 == 0 && superAttackPoint != 0)
         //if (superAttackPoint % 1 == 0)
         {
