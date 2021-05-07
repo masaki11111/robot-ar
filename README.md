@@ -10,8 +10,6 @@
 ## 使い方
 <a href="https://shoki-portfolio.studio.site/6">こちら</a>に操作方法がのっています。
 
-## インセプションデッキもどき
-
 ## クラス図
 ![クラス図](https://github.com/masaki11111/robot-ar/blob/master/plantuml/class/class_2.png)  
 
@@ -19,7 +17,7 @@
 ![シーケンス図](https://github.com/masaki11111/robot-ar/blob/master/plantuml/sequence/sequence.png)  
   
   
-
+* * *
 
 >## インセプションデッキ
 
