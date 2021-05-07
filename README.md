@@ -15,4 +15,4 @@
 ## クラス図
 ![クラス図](https://github.com/masaki11111/robot-ar/blob/master/plantuml/class/class_2.png)  
 ## シーケンス図
-![クラス図](https://github.com/masaki11111/robot-ar/blob/master/plantuml/class/class_2.png)  
+![シーケンス図](https://github.com/masaki11111/robot-ar/blob/master/plantuml/sequence/sequence.png)  
