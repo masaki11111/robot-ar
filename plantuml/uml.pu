@@ -161,7 +161,10 @@ package UI{
 }
 package Vuforia{
     class  DefaultTrackableEventHandler{
-        ペッパー出現時のアニメーション開始(Light⇨Animation)
+        - void OnTrackingFound()
+    }
+
+    class PepperAppearanceAnimation{
         - bool pAppearanceLightSwitch
         - bool pAppearanceAnimationSwitch
         ParticleSystem pepperPresenceAnimation
@@ -173,11 +176,15 @@ package Vuforia{
         + GameObject pepperPresence
         pepperが出たときにマーカーをペッパーがいないのものに差し替える
         + GameObject PostGround
-        OnTrackingFound()
     }
+
 }
+
 
 EnemyHit -- EnemyCreation
 Timer -- ProgressBarCircle
 Timer -- EnemyCreation
+DefaultTrackableEventHandler -- PepperAppearanceAnimation
+
+
 @enduml

@@ -25,21 +25,21 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected TrackableBehaviour mTrackableBehaviour;
     protected TrackableBehaviour.Status m_PreviousStatus;
     protected TrackableBehaviour.Status m_NewStatus;
-    //bool pSwitch = true;
-    bool pAppearanceAnimationSwitch = false;
-    public GameObject pepperPresence;
-    ParticleSystem pepperPresenceAnimation;
-    //ペッパーが出たときの音
-    public AudioSource pepperPresenceAudio;
-    public GameObject pepperColor;
-    public Material PepperMaterial;
-    public GameObject spotLight;
-    bool pAppearanceLightSwitch = false;
-    //bool pAppearanceSwitch = true;
-    //pepperが出たときにマーカーをペッパーがいないのものに差し替える
-    //public Texture NormalmapTexture;
-    //public Material TargetMaterial;
-    public GameObject PostGround;
+
+    //bool pAppearanceAnimationSwitch = false;
+    //bool pAppearanceLightSwitch = false;
+
+    //public GameObject pepperPresence;
+    //ParticleSystem pepperPresenceAnimation;
+    ////ペッパーが出たときの音
+    //public AudioSource pepperPresenceAudio;
+    //public GameObject pepperColor;
+    //public Material PepperMaterial;
+    //public GameObject spotLight;
+    //public GameObject PostGround;
+    int startAppearanceAnimationNumber = 0;
+    public bool startAppearanceAnimation = false;
+
     #endregion // PROTECTED_MEMBER_VARIABLES
 
     #region UNITY_MONOBEHAVIOUR_METHODS
@@ -50,21 +50,22 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         if (mTrackableBehaviour)
             mTrackableBehaviour.RegisterTrackableEventHandler(this);
-        Debug.Log("Start");
+        //Debug.Log("Start");
 
-        //ペッパーを透明にしておく
-        pepperColor.SetActive(false);
-        PepperMaterial.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0f / 255f);
+        ////ペッパーを透明にしておく
+        //pepperColor.SetActive(false);
+        //PepperMaterial.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0f / 255f);
 
-        //ペッパー出現時のライト
-        spotLight.GetComponent<Light>().spotAngle = 1;
+        ////ペッパー出現時のライトの角度
+        //spotLight.GetComponent<Light>().spotAngle = 1;
+        ////パーティクル
+        //pepperPresenceAnimation = pepperPresence.GetComponent<ParticleSystem>();
 
-        //ペッパーがいないマーカーを透明にしておく
-        PostGround.GetComponent<SpriteRenderer>().color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0 / 255f);
-        //var childTransform = GameObject.Find("PepperColor").GetComponentsInChildren<Transform>();
+        ////ペッパーがいないマーカー（postground）を透明にしておく
+        //PostGround.GetComponent<SpriteRenderer>().color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0 / 255f);
+        ////var childTransform = GameObject.Find("PepperColor").GetComponentsInChildren<Transform>();
 
-        pepperPresenceAnimation = pepperPresence.GetComponent<ParticleSystem>();
-
+ 
     }
 
     protected virtual void OnDestroy()
@@ -127,9 +128,14 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             Debug.Log("OnTrackingFound()");
 
 
-           //キラキラカードのエフェクト
-           pAppearanceLightSwitch = true;
-       
+            //ペッパー出現のアニメーションを始める(一度だけ)
+            if (startAppearanceAnimationNumber == 0)
+            {
+                startAppearanceAnimation = true;
+                startAppearanceAnimationNumber = -1; 
+            }
+
+            //
             // Enable rendering:
             foreach (var component in rendererComponents)
                 component.enabled = true;
@@ -166,67 +172,63 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
                 component.enabled = false;
         }
     }
-    void FixedUpdate()
-    {
-        if (pAppearanceLightSwitch)
-        {
-            if (spotLight.GetComponent<Light>().spotAngle < 179)
-            {
-                spotLight.GetComponent<Light>().spotAngle += 1.0f;
-            }
-            else
-            {
-                pAppearanceLightSwitch = false;
-                pepperColor.SetActive(true);
-                pepperPresenceAnimation.Play();
-                pepperPresenceAudio.Play();
-                pAppearanceAnimationSwitch = true;
-                //pSwitch = false;
-            }
-        }
-        if (pAppearanceAnimationSwitch)
-        {
-            if (PepperMaterial.color.a < 0.0001)
-            {
-                PepperMaterial.color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 0.0001f / 255f);
-                var childTransform = GameObject.Find("PepperColor").GetComponentsInChildren<Transform>();
-                foreach (Transform child in childTransform)
-                {
-                    if (null != child.GetComponent<SkinnedMeshRenderer>())
-                    {
-                        Material[] mats = child.GetComponent<Renderer>().materials;
-                        mats[0] = PepperMaterial;
-                        child.GetComponent<Renderer>().materials = mats;
-                    }
-                }
-            }
-            else if (PepperMaterial.color.a >= 0.0001 && PepperMaterial.color.a < 1)
-            {
-                PepperMaterial.color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 4f / 255f);
-                var childTransform = GameObject.Find("PepperColor").GetComponentsInChildren<Transform>();
-                foreach (Transform child in childTransform)
-                {
-                    if (null != child.GetComponent<SkinnedMeshRenderer>())
-                    {
-                        Material[] mats = child.GetComponent<Renderer>().materials;
-                        mats[0] = PepperMaterial;
-                        child.GetComponent<Renderer>().materials = mats;
-                     }
-                }
-            }
-            if (PostGround.GetComponent<SpriteRenderer>().color.a < 1)
-            {
-                PostGround.GetComponent<SpriteRenderer>().color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 1f / 255f);
+    //void FixedUpdate()
+    //{
+    //    if (pAppearanceLightSwitch)
+    //    {
+    //        if (spotLight.GetComponent<Light>().spotAngle < 179)
+    //        {
+    //            spotLight.GetComponent<Light>().spotAngle += 1.0f;
+    //        }
+    //        else
+    //        {
+    //            pAppearanceLightSwitch = false;
+    //            pepperColor.SetActive(true);
+    //            pepperPresenceAnimation.Play();
+    //            pepperPresenceAudio.Play();
+    //            pAppearanceAnimationSwitch = true;
+    //            //pSwitch = false;
+    //        }
+    //    }
+    //    if (pAppearanceAnimationSwitch)
+    //    {
+    //        if (PepperMaterial.color.a < 0.0001)
+    //        {
+    //            PepperMaterial.color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 0.0001f / 255f);
+    //            var childTransform = GameObject.Find("PepperColor").GetComponentsInChildren<Transform>();
+    //            foreach (Transform child in childTransform)
+    //            {
+    //                if (null != child.GetComponent<SkinnedMeshRenderer>())
+    //                {
+    //                    Material[] mats = child.GetComponent<Renderer>().materials;
+    //                    mats[0] = PepperMaterial;
+    //                    child.GetComponent<Renderer>().materials = mats;
+    //                }
+    //            }
+    //        }
+    //        else if (PepperMaterial.color.a >= 0.0001 && PepperMaterial.color.a < 1)
+    //        {
+    //            PepperMaterial.color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 4f / 255f);
+    //            var childTransform = GameObject.Find("PepperColor").GetComponentsInChildren<Transform>();
+    //            foreach (Transform child in childTransform)
+    //            {
+    //                if (null != child.GetComponent<SkinnedMeshRenderer>())
+    //                {
+    //                    Material[] mats = child.GetComponent<Renderer>().materials;
+    //                    mats[0] = PepperMaterial;
+    //                    child.GetComponent<Renderer>().materials = mats;
+    //                 }
+    //            }
+    //        }
+    //        if (PostGround.GetComponent<SpriteRenderer>().color.a < 1)
+    //        {
+    //            PostGround.GetComponent<SpriteRenderer>().color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 1f / 255f);
 
-            }
-
-
-        }
+    //        }
 
 
-
-
-    }
+    //    }
+    //}
 
     #endregion // PROTECTED_METHODS
 }
