@@ -1,0 +1,34 @@
+@startuml
+
+participant Loading as ld
+participant EnemyHit as eh
+participant EnemyCreation as ec
+participant Timer as tm
+
+' participant is as ec
+
+== State:Menu ==
+
+' alt　あそぶ
+'     ld ->  : あそぶ
+' else きゃらをみる    
+'     ld ->  : マウス入力
+' end
+
+ld -> ld : Battleへ移行
+
+== State:Battle ==
+
+ec -> tm: スタートボタン押下でカウントダウン開始
+activate tm #FFBBBB
+tm -> tm :カウントダウン（30秒）
+
+eh -> ec : OnTriggerEnter
+ec -> ec : KillAndRevival(敵削除＆復活＆スコア更新)
+
+tm ->> tm : 終了画面表示
+ld -> ld :シーン遷移
+
+deactivate tm
+
+@enduml
