@@ -14,17 +14,19 @@ public class Timer : MonoBehaviour {
 	public ProgressBarCircle PbC;
 
 	public AudioSource BattleAudio; // add
-	EnemyCreation enemyCreation;
+	ObtainedPointManager obtainedPointManager;
+
 
 	public Text ResultPoint;
 
 	void Start()
 	{
-        PbC.BarValue = 100;
+		obtainedPointManager = GameObject.Find("Point").GetComponent<ObtainedPointManager>();
+		PbC.BarValue = 100;
         BattleAudio.Play(); //add
 		Destroy(GameObject.Find("StartButton"));
 
-		enemyCreation = GameObject.Find("EnemyManager").GetComponent<EnemyCreation>();
+		//obtainedPointManager = GameObject.Find("Point").GetComponent<EnemyCreation>();
 
 	}
 
@@ -36,15 +38,22 @@ public class Timer : MonoBehaviour {
 		//timerText.text = seconds.ToString();
 		PbC.BarValue -= Time.deltaTime;
 
+		//タイムアップしたら
         if (PbC.BarValue <= 0)
         {
             //Debug.Log("finish");
             BattleAudio.Stop();//add
             Menu.SetActive(true);
 			//結果表示
-			ResultPoint.text = enemyCreation.EnemyNum.ToString();
+			ResultPoint.text = obtainedPointManager._ObtainedPoint.ToString();
 			//SceneManager.LoadScene(3);
 		}
 
     }
+	public void RecoverTIme()
+    {
+		Debug.Log("barvalue");
+		PbC.barValue += 10.0f;
+    }
+
 }

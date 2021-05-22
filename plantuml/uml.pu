@@ -11,12 +11,11 @@ package Enemy{
         + int EnemyNum
         GunPoint = 0
         + int GunPoint
-        SuperAtttackpoint = 0
-        + int SuperAtttackpoint
         + GameObject GreenMonster
         + GameObject SphereRobot
         + GameObject Gundam
         + GameObject Pepper
+        + int EnemyNumManagementPoint
 
         + Transform ImageTarget
         + Transform EnemyPoint1
@@ -30,7 +29,7 @@ package Enemy{
 
         - string name
 
-        + void KillAndRevival()
+        + void CreateEnemy()
     }
 
     class EnemyManager {
@@ -120,6 +119,10 @@ package Player{
 }
 
 package UI{
+    class ObtainedPointManager{
+        + Text ObtainedPoint
+        + int _ObtainedPoint
+    }
     class DisplayMenu{
         - GameObject Menu
         isDisplay = true
@@ -182,6 +185,11 @@ package Vuforia{
 
 
 EnemyHit -- EnemyCreation
+EnemyHit -- SuperAttackManager
+EnemyHit -- ObtainedPointManager
+
+Timer -- ObtainedPointManager
+
 Timer -- ProgressBarCircle
 Timer -- EnemyCreation
 DefaultTrackableEventHandler -- PepperAppearanceAnimation

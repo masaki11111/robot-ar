@@ -32,7 +32,7 @@ public class ProgressBarCircle : MonoBehaviour {
     private float nextPlay;
     //private AudioSource audiosource;
     private Text txtTitle;
-    private float barValue;
+    public float barValue;
     public float BarValue
     {
         get { return barValue; }

@@ -16,7 +16,7 @@ public class SuperAttackManager : MonoBehaviour
     //必殺技
     public ButtonState buttonB;
     GameObject Earth;
-    int superAttackPoint;
+    public int superAttackPoint;
     ParticleSystem EarthShatter1;
     ParticleSystem EarthShatter2;
     ParticleSystem EarthShatter3;
@@ -50,10 +50,10 @@ public class SuperAttackManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyCreation = GameObject.Find("EnemyManager").GetComponent<EnemyCreation>();
+        //enemyCreation = GameObject.Find("EnemyManager").GetComponent<EnemyCreation>();
 
         //必殺技初期化
-        //superAttackPoint = 0;
+        superAttackPoint = 0;
         Earth = GameObject.Find("EarthShatter");
         EarthShatter1 = GameObject.Find("EarthShatter1").GetComponent<ParticleSystem>();
         EarthShatter2 = GameObject.Find("EarthShatter2").GetComponent<ParticleSystem>();
@@ -79,7 +79,7 @@ public class SuperAttackManager : MonoBehaviour
         ////EnemyNumの値を取得
         //eHit = enemyCreation.EnemyNum;
         //gunPoint = enemyCreation.GunPoint;
-        superAttackPoint = enemyCreation.SuperAtttackpoint;
+        //superAttackPoint = enemyCreation.SuperAtttackpoint;
 
         //敵を倒して20ポイント溜まったら必殺技を打てる様にする
         if (superAttackPoint % 20 == 0 && superAttackPoint != 0)
