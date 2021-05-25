@@ -5,55 +5,69 @@ using UnityEngine.UI;
 
 
 public class Timer : MonoBehaviour {
-
-	//public Text timerText;
-	//public float totalTime;
-	//int seconds;
 	public GameObject Menu;
-
-	public ProgressBarCircle PbC;
-
+	ProgressBarCircle PbC;
 	public AudioSource BattleAudio; // add
 	ObtainedPointManager obtainedPointManager;
-
-
-	public Text ResultPoint;
+	EnemyCreation enemyCreation;
+    public Text ResultPoint;
+	PlayerHit playerHit;
+	//public bool HitPlayer;
+	public ButtonState StartButton;
+	bool startTimer; 
 
 	void Start()
 	{
+		PbC = GameObject.Find("Timer").GetComponent<ProgressBarCircle>();
 		obtainedPointManager = GameObject.Find("Point").GetComponent<ObtainedPointManager>();
+		enemyCreation = GameObject.Find("EnemyManager").GetComponent<EnemyCreation>();
+
+		playerHit = GameObject.Find("Collider").GetComponent<PlayerHit>();
 		PbC.BarValue = 100;
-        BattleAudio.Play(); //add
-		Destroy(GameObject.Find("StartButton"));
-
-		//obtainedPointManager = GameObject.Find("Point").GetComponent<EnemyCreation>();
-
+		startTimer = false;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		//totalTime -= Time.deltaTime;
-		//seconds = (int)totalTime;
-		//timerText.text = seconds.ToString();
-		PbC.BarValue -= Time.deltaTime;
+
+		if (StartButton.IsDown())
+		{
+			BattleAudio.Play(); //add
+			Destroy(GameObject.Find("StartButton"));
+			startTimer = true;
+			enemyCreation.CreateEnemyForFirstTime();
+		}
+
+		if (startTimer)
+        {
+			PbC.BarValue -= Time.deltaTime;
+		}
 
 		//タイムアップしたら
-        if (PbC.BarValue <= 0)
+		if (PbC.BarValue <= 0 || playerHit.HitPlayer)
         {
-            //Debug.Log("finish");
-            BattleAudio.Stop();//add
-            Menu.SetActive(true);
-			//結果表示
-			ResultPoint.text = obtainedPointManager._ObtainedPoint.ToString();
-			//SceneManager.LoadScene(3);
+			FinishGame();
 		}
 
     }
+
+	//時間を回復
 	public void RecoverTIme()
     {
-		Debug.Log("barvalue");
-		PbC.barValue += 10.0f;
+		PbC.barValue += 5.0f;
     }
+
+	//時間を回復
+	public void FinishGame()
+	{
+		//Debug.Log("finish");
+		BattleAudio.Stop();//add
+		Menu.SetActive(true);
+		//結果表示
+		
+		ResultPoint.text = obtainedPointManager._ObtainedPoint.ToString();
+		//SceneManager.LoadScene(3);
+	}
 
 }

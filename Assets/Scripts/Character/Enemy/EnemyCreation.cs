@@ -7,10 +7,6 @@ using UnityEngine.AI;
 //敵を作成するスクリプト
 public class EnemyCreation : MonoBehaviour
 {
-    //public Text ;
-    //public Text ObtainedPoint;
-    //public int EnemyNum = 0;
-    //public int SuperAtttackpoint = 0;
     public int EnemyNumManagementPoint;
     public GameObject GreenMonster;
     public GameObject SphereRobot;
@@ -23,46 +19,23 @@ public class EnemyCreation : MonoBehaviour
     public Transform EnemyPoint3;
     public Transform EnemyPoint4;
 
-    public ButtonState StartButton;
-    public GameObject Timer;
+    //public ButtonState StartButton;
+    //public GameObject Timer;
 
     int enemyPointNum;
-    //public ButtonState buttonB;
-    //void Start()
-    //{
-    //    ObtainedPoint.text = "ぽいんと:" + EnemyNum;
-    //}
-    //// Start is called before the first frame update
-
-    // Update is called once per frame
     void Start()
     {
-        EnemyNumManagementPoint = 0;    
+        EnemyNumManagementPoint = 0;
+        ImageTarget = GameObject.Find("ImageTarget").transform;
     }
     void Update()
     {
-        //初期状態で１０体生成
-        //if (Input.GetKeyDown(KeyCode.A))
-        if (StartButton.IsDown())
-        {
-            Timer.GetComponent<Timer>().enabled = true;
-            ImageTarget = GameObject.Find("ImageTarget").transform;
-
-            for (int r = 1; r <= 5; r++)
-            {
-                Instantiate(GreenMonster, EnemyPoint1.position, EnemyPoint1.rotation, ImageTarget);
-                //Debug.Log("what?111");
-                Instantiate(Gundam, EnemyPoint2.position, EnemyPoint2.rotation, ImageTarget);
-                Instantiate(SphereRobot, EnemyPoint3.position, EnemyPoint3.rotation, ImageTarget);
-                Instantiate(SphereRobot, EnemyPoint4.position, EnemyPoint4.rotation, ImageTarget);
-            }
-        }
 
         //5対倒すごとに敵を5対増やす
         if(EnemyNumManagementPoint % 5 == 0 & EnemyNumManagementPoint != 0)
         {
             Debug.Log("enemyCreation");
-            for(int l = 0; l < 3; l++)
+            for(int l = 0; l < 5; l++)
             {
                 CreateEnemy();
             }
@@ -70,58 +43,99 @@ public class EnemyCreation : MonoBehaviour
         }
     }
 
+    public void CreateEnemyForFirstTime()
+    {
+        for (int r = 1; r <= 5; r++)
+        {
+            Instantiate(GreenMonster, EnemyPoint1.position, EnemyPoint1.rotation, ImageTarget);
+            //Debug.Log("what?111");
+            Instantiate(Gundam, EnemyPoint2.position, EnemyPoint2.rotation, ImageTarget);
+            Instantiate(SphereRobot, EnemyPoint3.position, EnemyPoint3.rotation, ImageTarget);
+            Instantiate(SphereRobot, EnemyPoint4.position, EnemyPoint4.rotation, ImageTarget);
+        }
+
+    }
+
     public void CreateEnemy()
     {
         //地面の4角から敵を生成
         ImageTarget = GameObject.Find("ImageTarget").transform;
-        enemyPointNum = Random.Range(5, 6);
-        if (enemyPointNum == 1)
+        enemyPointNum = Random.Range(1, 85);
+        if (enemyPointNum <20 )
         {
             StartCoroutine("GreenMonsterCreation");
         }
-        else if (enemyPointNum == 2)
+        else if (enemyPointNum >= 20 && enemyPointNum < 40 )
         {
             StartCoroutine("GundamMonsterCreation");
         }
-        else if (enemyPointNum == 3)
+        else if (enemyPointNum >= 40 && enemyPointNum < 60)
         {
             StartCoroutine("SphereRobot3Creation");
         }
-        else if (enemyPointNum == 4)
+        else if (enemyPointNum >= 60 && enemyPointNum < 80)
         {
             StartCoroutine("SphereRobot4Creation");
         }
-        else if (enemyPointNum == 5)
+        else if (enemyPointNum >= 80 && enemyPointNum < 81)
         {
-            StartCoroutine("RecoverTimeGreenMonsterCreation");
+            StartCoroutine("RecoverTimeGreenMonster1Creation");
         }
+        else if (enemyPointNum >= 81 && enemyPointNum < 82)
+        {
+            StartCoroutine("RecoverTimeGreenMonster2Creation");
+        }
+        else if (enemyPointNum >= 82 && enemyPointNum < 83)
+        {
+            StartCoroutine("RecoverTimeGreenMonster3Creation");
+        }
+        else if (enemyPointNum >= 83 && enemyPointNum < 84)
+        {
+            StartCoroutine("RecoverTimeGreenMonster4Creation");
+        }
+
 
     }
 
 
     IEnumerator GreenMonsterCreation()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         Instantiate(GreenMonster, EnemyPoint1.position, EnemyPoint1.rotation, ImageTarget);
     }
     IEnumerator GundamMonsterCreation()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         Instantiate(Gundam, EnemyPoint2.position, EnemyPoint2.rotation, ImageTarget);
     }
     IEnumerator SphereRobot3Creation()
     {
-        yield return new WaitForSeconds(5);
-        Instantiate(SphereRobot, EnemyPoint4.position, EnemyPoint3.rotation, ImageTarget);
+        yield return new WaitForSeconds(3);
+        Instantiate(SphereRobot, EnemyPoint3.position, EnemyPoint3.rotation, ImageTarget);
     }
     IEnumerator SphereRobot4Creation()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         Instantiate(SphereRobot, EnemyPoint4.position, EnemyPoint4.rotation, ImageTarget);
     }
-    IEnumerator RecoverTimeGreenMonsterCreation()
+    IEnumerator RecoverTimeGreenMonster1Creation()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
+        Instantiate(RecoverTimeGreenMonster, EnemyPoint1.position, EnemyPoint4.rotation, ImageTarget);
+    }
+    IEnumerator RecoverTimeGreenMonster2Creation()
+    {
+        yield return new WaitForSeconds(3);
+        Instantiate(RecoverTimeGreenMonster, EnemyPoint2.position, EnemyPoint4.rotation, ImageTarget);
+    }
+    IEnumerator RecoverTimeGreenMonster3Creation()
+    {
+        yield return new WaitForSeconds(3);
+        Instantiate(RecoverTimeGreenMonster, EnemyPoint3.position, EnemyPoint4.rotation, ImageTarget);
+    }
+    IEnumerator RecoverTimeGreenMonster4Creation()
+    {
+        yield return new WaitForSeconds(3);
         Instantiate(RecoverTimeGreenMonster, EnemyPoint4.position, EnemyPoint4.rotation, ImageTarget);
     }
 

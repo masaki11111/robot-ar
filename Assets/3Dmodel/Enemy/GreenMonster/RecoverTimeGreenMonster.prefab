@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RecoverTimeGreenMonster
       objectReference: {fileID: 0}
+    - target: {fileID: 1858393104750846291, guid: f04d067d71b72493cb3f7326eb37d20c,
+        type: 3}
+      propertyPath: m_TagString
+      value: RecoverTimeEnemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1858393104750846637, guid: f04d067d71b72493cb3f7326eb37d20c,
         type: 3}
       propertyPath: m_LocalPosition.x

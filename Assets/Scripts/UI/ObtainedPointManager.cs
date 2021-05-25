@@ -9,7 +9,7 @@ public class ObtainedPointManager : MonoBehaviour
     // Start is called before the first frame update
     public Text ObtainedPoint;
     public int _ObtainedPoint;
-
+    //public Text ResultPoint;
     void Start()
     {
         //ObtainedPoint.text = "ぽいんと:" + EnemyNum;

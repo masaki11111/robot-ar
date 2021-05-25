@@ -11,13 +11,13 @@ public class EnemyHit : MonoBehaviour
     SuperAttackManager superAttackManager;
     EnemyCreation enemyCreation;
 
-    private Collider leftFootCollider;
+    //private Collider leftFootCollider;
     //ダメージが当たったときの効果音
     public AudioSource Hit;
     public AudioClip impact;
     //敵の位置
     private Vector3 EnemyPos;
-    private Vector3 HitPos;
+    //private Vector3 HitPos;
     //ダメージが当たったときのエフェクト
     public GameObject HitParticleObject;
     public Transform ImageTarget;
@@ -35,9 +35,12 @@ public class EnemyHit : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //enemyに当たった時
-        //if (collision.gameObject.layer == 10)
         if (other.CompareTag("Enemy"))
         {
+            ////メタルスライムならタイムを十秒増やす
+            //Debug.Log("barvalue");
+            //timer.RecoverTIme();
+
             //ダメージの数値を渡す
             GameObject.Find("EnemyManager").GetComponent<EnemyCreation>().CreateEnemy();
 
@@ -58,11 +61,35 @@ public class EnemyHit : MonoBehaviour
 
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-            //メタルスライムならタイムを十秒増やす
-            if(other.transform.name == "RecoverTimeGreenMonster")
-            {
-                timer.RecoverTIme();
-            }
+        }
+
+        //メタルスライムならタイムを十秒増やす
+        else if (other.CompareTag("RecoverTimeEnemy"))
+        {
+            Debug.Log("barvalue");
+            timer.RecoverTIme();
+
+            //ダメージの数値を渡す
+            GameObject.Find("EnemyManager").GetComponent<EnemyCreation>().CreateEnemy();
+
+            //点数管理
+            obtainedPointManager._ObtainedPoint += point;
+            enemyCreation.EnemyNumManagementPoint += point;
+            obtainedPointManager.ObtainedPoint.text = "ぽいんと:" + obtainedPointManager._ObtainedPoint;
+            superAttackManager.superAttackPoint += point;
+
+            //ダメージを与えた時に効果音を出す
+            Hit = gameObject.GetComponent<AudioSource>();
+            Hit.PlayOneShot(impact);
+
+            //攻撃が当たった敵を消す＆当たったところに煙のエフェクトを出す
+            EnemyPos = other.gameObject.transform.position;
+            Destroy(other.gameObject);
+            Instantiate(HitParticleObject, EnemyPos, Quaternion.identity, ImageTarget);
+
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         }
     }
 }
+

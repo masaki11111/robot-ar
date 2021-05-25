@@ -2,42 +2,45 @@
 title robot-ar
 package Enemy{
     class EnemyCreation {
-
-        + Text HPText
-        + Text Point
-        HP=0
-        - int HP
-        EnemyNum=0
-        + int EnemyNum
-        GunPoint = 0
-        + int GunPoint
+        --敵オブジェクト--
         + GameObject GreenMonster
         + GameObject SphereRobot
         + GameObject Gundam
-        + GameObject Pepper
-        + int EnemyNumManagementPoint
-
+        
+        --敵の生成場所（４角に配置）--
         + Transform ImageTarget
         + Transform EnemyPoint1
         + Transform EnemyPoint2
         + Transform EnemyPoint3
         + Transform EnemyPoint4
 
-        + ButtonState StartButton
-
+        --スタートボタンを押したらタイマーを表示--
         + GameObject Timer
+        
+        --敵の数を管理（増加）する時の数--
+        + int EnemyNumManagementPoint
 
-        - string name
-
+        --敵生成--
         + void CreateEnemy()
-    }
 
+        --スタートボタン押下時の敵生成--
+        + void CreateEnemyForFirstTime()
+
+    }
+    note right
+    敵生成
+    end note
+    
     class EnemyManager {
         - string name
         - GameObject target
         - NavMeshAgent agent
         - AudioSource Walk
     }
+    note right
+    敵の移動管理
+    end note
+
 }
 
 package Player{
@@ -48,6 +51,9 @@ package Player{
         + FixedJoystick joystick
 
     }
+    note right
+    プレイヤーの移動
+    end note
 
     class LightAttackManager{
         + ButtonState buttonA
@@ -59,11 +65,17 @@ package Player{
         + AudioSource FlameAudio
 
     }
+    note right
+    プレイヤーの小攻撃管理
+    end note
 
     class SuperAttackManager{
         + ButtonState buttonB
         - GameObject Earth
+        --大攻撃ができるまでのポイント管理--
         - int superAttackPoint
+
+        --エフェクト本体--
         - ParticleSystem EarthShatter1
         - ParticleSystem EarthShatter2
         - ParticleSystem EarthShatter3
@@ -74,55 +86,65 @@ package Player{
         - ParticleSystem EarthShatter8
         - BoxCollider EarthCollider
         - float EarthLength
-        + GameObject superAttackButton
-        - GameObject superAttackTrigger
         + AudioSource superAttackAudio
-        + AudioSource superAttackButtonAudio
-        - EnemyCreation enemyCreation
-        - int eHit
-        - int count
+        
+        --カットイン--
         - Animator SuperAttackImageCutin
         - PostProcessVolume postProcessVolume
         - ColorGrading _colorGrading
         + float timeOut
         - float timeElapsed
         - bool waitforcutin
-        eHitの値を引き継ぐ
-        - int _eHit
+        - int count
+        
+        --大攻撃のボタン--
+        + GameObject superAttackButton
+        - GameObject superAttackTrigger
+        + AudioSource superAttackButtonAudio
+           
         - IEnumerator SuperAttack()
-
-
     }
+    note right
+    プレイヤーの大攻撃管理
+    end note
 
     class EnemyHit{
-        damage=10
-        - int damage
-        攻撃が当たったときのダメージの数値
-        point = 0
+        --攻撃が当たったときのダメージの数値--        
         - int point
-        - Collider leftFootCollider
-        ダメージが当たったときの効果音
+
+        --ダメージが当たったときの効果音--
         + AudioSource Hit
         + AudioClip impact
-        敵の位置
+
+        --敵の位置--
         - Vector3 EnemyPos
         - Vector3 HitPos
-        ダメージが当たったときのエフェクト
+
+        --ダメージが当たったときのエフェクト--
         + GameObject HitParticleObject
         + Transform ImageTarget
 
         - void OnTriggerEnter()
-
-
     }
-
+    note right
+    ダメージ処理
+    end note
 }
+    class PlayerHit{
+    + bool PlayerHit
+    - void OnTriggerEnter()
+    
+    }
 
 package UI{
     class ObtainedPointManager{
         + Text ObtainedPoint
         + int _ObtainedPoint
     }
+    note right
+    点数
+    end note
+
     class DisplayMenu{
         - GameObject Menu
         isDisplay = true
@@ -149,7 +171,6 @@ package UI{
         + void ToMenu()
 
         -IEnumerator LoadingMenu()
-
     }
 
     class ProgressBarCircle{
@@ -157,10 +178,18 @@ package UI{
     }
     class Timer{
         + GameObject Menu
-        + ProgressBarCircle PbC
         + AudioSource BattleAudio
-    }
+        - Text ResultPoint
+        + bool HitPlayer
+        + ButtonState StartButton
+	    - bool startTimer
+        + void RecoverTime()
+        + void FinishGame()
 
+    }
+    note right
+    タイマーとリザルト画面表示
+    end note
 }
 package Vuforia{
     class  DefaultTrackableEventHandler{
@@ -184,14 +213,41 @@ package Vuforia{
 }
 
 
-EnemyHit -- EnemyCreation
+EnemyHit -- EnemyCreation: Hoge
+note on link
+onTriggerEnter時に
+通常の敵なら敵生成（CreateEnemy（））
+end note
+
 EnemyHit -- SuperAttackManager
+note on link: SuperAttackPoint計算
+
 EnemyHit -- ObtainedPointManager
+note on link: 点数（_ObtainedPoint）参照
+
+EnemyHit -- Timer
+note on link
+onTriggerEnter時に
+メタルスライムなら
+時間回復（RecoverTime()）
+end note
 
 Timer -- ObtainedPointManager
+note on link
+ゲーム終了時に_ObtaiondPoint参照
+end note
 
 Timer -- ProgressBarCircle
+note on link
+タイマーのUI処理
+end note
+
 Timer -- EnemyCreation
+note on link
+スタートボタンを押した時に
+CreateEnemyForFirstTime()
+end note
+
 DefaultTrackableEventHandler -- PepperAppearanceAnimation
 
 
