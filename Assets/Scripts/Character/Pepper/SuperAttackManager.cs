@@ -72,7 +72,7 @@ public class SuperAttackManager : MonoBehaviour
     void Update()
     {
         //敵を倒して20ポイント溜まったら必殺技を打てる様にする
-        if (superAttackPoint % 1 == 0 && superAttackPoint != 0)
+        if (superAttackPoint % 10 == 0 && superAttackPoint != 0)
         //if (superAttackPoint % 1 == 0)
         {
 

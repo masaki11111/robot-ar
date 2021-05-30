@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHit : MonoBehaviour
 {
-    Timer timer;
+    //Timer timer;
     public bool HitPlayer;
 
     // Start is called before the first frame update

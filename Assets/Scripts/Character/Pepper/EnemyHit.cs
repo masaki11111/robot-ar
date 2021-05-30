@@ -13,14 +13,14 @@ public class EnemyHit : MonoBehaviour
 
     //private Collider leftFootCollider;
     //ダメージが当たったときの効果音
-    public AudioSource Hit;
+    AudioSource Hit;
     public AudioClip impact;
     //敵の位置
-    private Vector3 EnemyPos;
+    Vector3 EnemyPos;
     //private Vector3 HitPos;
     //ダメージが当たったときのエフェクト
     public GameObject HitParticleObject;
-    public Transform ImageTarget;
+    Transform ImageTarget;
     Timer timer;
 
     private void Start()
@@ -29,7 +29,8 @@ public class EnemyHit : MonoBehaviour
         superAttackManager = GameObject.Find("Pepper").GetComponent<SuperAttackManager>();
         enemyCreation = GameObject.Find("EnemyManager").GetComponent<EnemyCreation>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
-
+        Hit = GameObject.Find("EnemyManager").GetComponent<AudioSource>();
+        ImageTarget = GameObject.Find("ImageTarget").GetComponent<Transform>();
         //EnemyNumManagementPoint = 0;
     }
     void OnTriggerEnter(Collider other)
@@ -42,7 +43,8 @@ public class EnemyHit : MonoBehaviour
             //timer.RecoverTIme();
 
             //ダメージの数値を渡す
-            GameObject.Find("EnemyManager").GetComponent<EnemyCreation>().CreateEnemy();
+            //GameObject.Find("EnemyManager").GetComponent<EnemyCreation>().CreateEnemy();
+            enemyCreation.CreateEnemy();
 
             //点数管理
             obtainedPointManager._ObtainedPoint += point;
@@ -51,7 +53,6 @@ public class EnemyHit : MonoBehaviour
             superAttackManager.superAttackPoint += point;
 
             //ダメージを与えた時に効果音を出す
-            Hit = gameObject.GetComponent<AudioSource>();
             Hit.PlayOneShot(impact);
 
             //攻撃が当たった敵を消す＆当たったところに煙のエフェクトを出す
@@ -59,6 +60,11 @@ public class EnemyHit : MonoBehaviour
             Destroy(other.gameObject);
             Instantiate(HitParticleObject, EnemyPos, Quaternion.identity, ImageTarget);
 
+            //Bulletの時は、Bulletも消す
+            if (this.gameObject.tag == "Bullet")
+            {
+                Destroy(this.gameObject);
+            }
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         }
@@ -66,11 +72,12 @@ public class EnemyHit : MonoBehaviour
         //メタルスライムならタイムを十秒増やす
         else if (other.CompareTag("RecoverTimeEnemy"))
         {
-            Debug.Log("barvalue");
+            //Debug.Log("barvalue");
             timer.RecoverTIme();
 
             //ダメージの数値を渡す
-            GameObject.Find("EnemyManager").GetComponent<EnemyCreation>().CreateEnemy();
+            //GameObject.Find("EnemyManager").GetComponent<EnemyCreation>().CreateEnemy();
+            enemyCreation.CreateEnemy();
 
             //点数管理
             obtainedPointManager._ObtainedPoint += point;
@@ -79,7 +86,7 @@ public class EnemyHit : MonoBehaviour
             superAttackManager.superAttackPoint += point;
 
             //ダメージを与えた時に効果音を出す
-            Hit = gameObject.GetComponent<AudioSource>();
+            //Hit = gameObject.GetComponent<AudioSource>();
             Hit.PlayOneShot(impact);
 
             //攻撃が当たった敵を消す＆当たったところに煙のエフェクトを出す

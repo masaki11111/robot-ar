@@ -129,13 +129,13 @@ package Player{
     note right
     ダメージ処理
     end note
-}
+
     class PlayerHit{
     + bool PlayerHit
     - void OnTriggerEnter()
-    
+    + bool HitPlayer
     }
-
+}
 package UI{
     class ObtainedPointManager{
         + Text ObtainedPoint
@@ -176,11 +176,14 @@ package UI{
     class ProgressBarCircle{
         + float TimeLimit
     }
+    note left
+    タイマーのUI
+    end note
+
     class Timer{
         + GameObject Menu
         + AudioSource BattleAudio
         - Text ResultPoint
-        + bool HitPlayer
         + ButtonState StartButton
 	    - bool startTimer
         + void RecoverTime()
@@ -191,6 +194,7 @@ package UI{
     タイマーとリザルト画面表示
     end note
 }
+
 package Vuforia{
     class  DefaultTrackableEventHandler{
         - void OnTrackingFound()
@@ -212,8 +216,14 @@ package Vuforia{
 
 }
 
+PlayerHit -- Timer
+note on link
+OnTriggerEnterの時に
+FinishGame()
+end note
 
-EnemyHit -- EnemyCreation: Hoge
+
+EnemyHit -- EnemyCreation
 note on link
 onTriggerEnter時に
 通常の敵なら敵生成（CreateEnemy（））
@@ -239,7 +249,8 @@ end note
 
 Timer -- ProgressBarCircle
 note on link
-タイマーのUI処理
+タイムが切れたら、
+FinishGame()
 end note
 
 Timer -- EnemyCreation

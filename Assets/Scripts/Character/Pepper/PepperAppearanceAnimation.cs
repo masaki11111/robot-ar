@@ -6,14 +6,18 @@ public class PepperAppearanceAnimation : MonoBehaviour
 {
     bool pAppearanceEmissionSwitch = false;
     bool pAppearanceLightSwitch = false;
-    public GameObject pepperAppearanceEmission;
-    public GameObject pepperAppearanceLight;
+    //public GameObject pepperAppearanceEmission;
+    //public GameObject pepperAppearanceLight;
     public AudioSource pepperAppearanceAudio;
     //public GameObject pepperColor;
     public Material PepperMaterial;
-    public GameObject PostGround;
+    //public GameObject PostGround;
     Transform[] childTransform;
     public DefaultTrackableEventHandler defaultTrackableEventHandler;
+
+    public Light pepperAppearanceLight;
+    public ParticleSystem pepperAppearanceEmission;
+    public SpriteRenderer PostGround;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +26,7 @@ public class PepperAppearanceAnimation : MonoBehaviour
         PepperMaterial.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0f / 255f);
 
         //ペッパー出現時のライトの角度
-        pepperAppearanceLight.GetComponent<Light>().spotAngle = 1;
+        pepperAppearanceLight.spotAngle = 1;
         //パーティクル
         //pepperAppearanceEmission = pepperAppearance.GetComponent<ParticleSystem>();
 
@@ -33,6 +37,21 @@ public class PepperAppearanceAnimation : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        //Aを押したときにペッパー出現時のエフェクトをスキップする
+        if (Input.GetMouseButtonDown(0))
+        {
+            pAppearanceLightSwitch = false;
+            defaultTrackableEventHandler.startAppearanceAnimation = false;
+            pAppearanceEmissionSwitch = false;
+            pepperAppearanceEmission.Stop();
+            pepperAppearanceAudio.Stop();
+            pepperAppearanceLight.spotAngle = 179;
+            PepperMaterial.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
+            PostGround.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255f / 255f);
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -44,15 +63,15 @@ public class PepperAppearanceAnimation : MonoBehaviour
 
         if (pAppearanceLightSwitch)
         {
-            if (pepperAppearanceLight.GetComponent<Light>().spotAngle < 179)
+            if (pepperAppearanceLight.spotAngle < 179)
             {
-                pepperAppearanceLight.GetComponent<Light>().spotAngle += 1.0f;
+                pepperAppearanceLight.spotAngle += 1.0f;
             }
             else
             {
                 pAppearanceLightSwitch = false;
                 //pepperColor.SetActive(true);
-                pepperAppearanceEmission.GetComponent<ParticleSystem>().Play();
+                pepperAppearanceEmission.Play();
                 pepperAppearanceAudio.Play();
                 pAppearanceEmissionSwitch = true;
                 //pSwitch = false;
@@ -93,9 +112,9 @@ public class PepperAppearanceAnimation : MonoBehaviour
                 //    }
                 //}
             }
-            if (PostGround.GetComponent<SpriteRenderer>().color.a < 1)
+            if (PostGround.color.a < 1)
             {
-                PostGround.GetComponent<SpriteRenderer>().color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 1f / 255f);
+                PostGround.color += new Color(0 / 255f, 0 / 255f, 0 / 255f, 1f / 255f);
 
             }
 

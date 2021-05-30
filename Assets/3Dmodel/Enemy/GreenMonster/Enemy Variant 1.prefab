@@ -118,11 +118,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 505732535, guid: 256b32ca348264c48b9bb104330ed9b0, type: 3}
       propertyPath: m_Height
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 505732535, guid: 256b32ca348264c48b9bb104330ed9b0, type: 3}
       propertyPath: m_Center.y
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 505732535, guid: 256b32ca348264c48b9bb104330ed9b0, type: 3}
       propertyPath: m_Center.x

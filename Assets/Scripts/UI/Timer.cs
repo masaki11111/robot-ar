@@ -14,8 +14,8 @@ public class Timer : MonoBehaviour {
 	PlayerHit playerHit;
 	//public bool HitPlayer;
 	public ButtonState StartButton;
-	bool startTimer; 
-
+	bool startTimer;
+	public GameObject Pepper;
 	void Start()
 	{
 		PbC = GameObject.Find("Timer").GetComponent<ProgressBarCircle>();
@@ -25,6 +25,7 @@ public class Timer : MonoBehaviour {
 		playerHit = GameObject.Find("Collider").GetComponent<PlayerHit>();
 		PbC.BarValue = 100;
 		startTimer = false;
+		Pepper = GameObject.Find("Pepper");
 	}
 
 	// Update is called once per frame
@@ -68,6 +69,8 @@ public class Timer : MonoBehaviour {
 		
 		ResultPoint.text = obtainedPointManager._ObtainedPoint.ToString();
 		//SceneManager.LoadScene(3);
+		//Destroy(Pepper);
+		Pepper.SetActive(false);
 	}
 
 }

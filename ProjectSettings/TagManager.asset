@@ -7,6 +7,7 @@ TagManager:
   - Shootable
   - Enemy
   - RecoverTimeEnemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
