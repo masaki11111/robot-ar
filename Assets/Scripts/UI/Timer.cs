@@ -16,6 +16,7 @@ public class Timer : MonoBehaviour {
 	public ButtonState StartButton;
 	bool startTimer;
 	public GameObject Pepper;
+	SuperAttackManager superAttackManager;
 	void Start()
 	{
 		PbC = GameObject.Find("Timer").GetComponent<ProgressBarCircle>();
@@ -26,12 +27,13 @@ public class Timer : MonoBehaviour {
 		PbC.BarValue = 100;
 		startTimer = false;
 		Pepper = GameObject.Find("Pepper");
+
+		superAttackManager= GameObject.Find("Pepper").GetComponent<SuperAttackManager>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-
 		if (StartButton.IsDown())
 		{
 			BattleAudio.Play(); //add
@@ -46,11 +48,10 @@ public class Timer : MonoBehaviour {
 		}
 
 		//タイムアップしたら
-		if (PbC.BarValue <= 0 || playerHit.HitPlayer)
+		if ((PbC.BarValue <= 0 || playerHit.HitPlayer) && superAttackManager.isSuperAttack==false)
         {
 			FinishGame();
 		}
-
     }
 
 	//時間を回復
@@ -72,5 +73,4 @@ public class Timer : MonoBehaviour {
 		//Destroy(Pepper);
 		Pepper.SetActive(false);
 	}
-
 }

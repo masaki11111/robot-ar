@@ -23,6 +23,7 @@ public class EnemyHit : MonoBehaviour
     Transform ImageTarget;
     Timer timer;
 
+
     private void Start()
     {
         obtainedPointManager = GameObject.Find("Point").GetComponent<ObtainedPointManager>();
@@ -46,11 +47,17 @@ public class EnemyHit : MonoBehaviour
             //GameObject.Find("EnemyManager").GetComponent<EnemyCreation>().CreateEnemy();
             enemyCreation.CreateEnemy();
 
+
             //点数管理
             obtainedPointManager._ObtainedPoint += point;
             enemyCreation.EnemyNumManagementPoint += point;
             obtainedPointManager.ObtainedPoint.text = "ぽいんと:" + obtainedPointManager._ObtainedPoint;
-            superAttackManager.superAttackPoint += point;
+
+            //必殺技ではないときはこのポイントを貯める
+            if (superAttackManager.isSuperAttack == false)
+            {
+                superAttackManager.superAttackPoint += point;
+            }
 
             //ダメージを与えた時に効果音を出す
             Hit.PlayOneShot(impact);

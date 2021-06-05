@@ -1,5 +1,94 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &804842578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 804842579}
+  - component: {fileID: 804842581}
+  - component: {fileID: 804842580}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &804842579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804842578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3264715281484506117}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &804842581
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804842578}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &804842580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804842578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882be8ceea4d54b32bcbcca1803ad82c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitPlayer: 0
+--- !u!1 &842654110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 842654111}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &842654111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842654110}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.59, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3264715281484506117}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1104786194
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +146,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -208,12 +297,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8a119f88e4284cadb00e94c05a4d1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pepperAppearanceEmission: {fileID: 2509855929986198691}
-  pepperAppearanceLight: {fileID: 1104786194}
   pepperAppearanceAudio: {fileID: 1136698319}
   PepperMaterial: {fileID: 2100000, guid: 7c7774d52ad8043e4aa2f7412e6a37e6, type: 2}
-  PostGround: {fileID: 0}
   defaultTrackableEventHandler: {fileID: 0}
+  pepperAppearanceLight: {fileID: 1104786195}
+  pepperAppearanceEmission: {fileID: 2310823260200368695}
+  PostGround: {fileID: 0}
+--- !u!136 &1122187615
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264715281484476453}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1122187614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264715281484476453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882be8ceea4d54b32bcbcca1803ad82c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitPlayer: 0
+--- !u!114 &1122187616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264715281484476453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90f2e3b6986bf4425ba7410184b95068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 4985443246331726803, guid: fb0f4d490737f47ab93d0f0a0d4bcfe6, type: 3}
+  muzzle: {fileID: 842654111}
+  buttonA: {fileID: 0}
 --- !u!1001 &3839136137148783292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -363,9 +494,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a8a5b49784f848d487b338714c56286, type: 3}
---- !u!1 &2509855929986198691 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1698865665129215519, guid: 8a8a5b49784f848d487b338714c56286,
+--- !u!198 &2310823260200368695 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1537671937401921675, guid: 8a8a5b49784f848d487b338714c56286,
     type: 3}
   m_PrefabInstance: {fileID: 3839136137148783292}
   m_PrefabAsset: {fileID: 0}
@@ -379,14 +510,23 @@ PrefabInstance:
     - target: {fileID: 764659163, guid: a6466f5c9d0cc4f9f812f615fcb19b2e, type: 3}
       propertyPath: HitParticleObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1859569110994332257, guid: 1af53b92a96fb47dfabe55e53cd60dfd,
+        type: 3}
     - target: {fileID: 764659163, guid: a6466f5c9d0cc4f9f812f615fcb19b2e, type: 3}
       propertyPath: ImageTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 764659164, guid: a6466f5c9d0cc4f9f812f615fcb19b2e, type: 3}
+      propertyPath: m_Size.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1880383203, guid: a6466f5c9d0cc4f9f812f615fcb19b2e, type: 3}
       propertyPath: joystick
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880383203, guid: a6466f5c9d0cc4f9f812f615fcb19b2e, type: 3}
+      propertyPath: speed
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 1880383204, guid: a6466f5c9d0cc4f9f812f615fcb19b2e, type: 3}
       propertyPath: buttonA
@@ -825,6 +965,12 @@ PrefabInstance:
       propertyPath: ImageTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7350825742075820728, guid: a6466f5c9d0cc4f9f812f615fcb19b2e,
+        type: 3}
+      propertyPath: HitParticleObject
+      value: 
+      objectReference: {fileID: 1859569110994332257, guid: 1af53b92a96fb47dfabe55e53cd60dfd,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6466f5c9d0cc4f9f812f615fcb19b2e, type: 3}
 --- !u!1 &3264715281484476453 stripped

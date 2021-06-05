@@ -69,6 +69,22 @@ package Player{
     プレイヤーの小攻撃管理
     end note
 
+    class BulletManager{
+        + GameObject bullet
+        + Transform muzzle
+        + ButtonState buttonA
+    }
+    note right
+    プレイヤーの弾攻撃
+    end note
+
+    class BulletMover{
+        + float speed
+    }
+    note right
+    弾の移動
+    end note
+
     class SuperAttackManager{
         + ButtonState buttonB
         - GameObject Earth

@@ -42,6 +42,7 @@ public class SuperAttackManager : MonoBehaviour
     private float timeElapsed;
     bool waitforcutin;
 
+    public bool isSuperAttack;
 
 
     // Start is called before the first frame update
@@ -66,6 +67,7 @@ public class SuperAttackManager : MonoBehaviour
         //superAttackButtonImage=superAttackButton.GetComponent<Image>().color;
         //EarthCollider.enabled = false;
 
+        isSuperAttack = false;
     }
 
     // Update is called once per frame
@@ -75,7 +77,7 @@ public class SuperAttackManager : MonoBehaviour
         if (superAttackPoint % 10 == 0 && superAttackPoint != 0)
         //if (superAttackPoint % 1 == 0)
         {
-
+            
             superAttackButton.GetComponent<Image>().color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 166 / 255f);
             //Debug.Log("imagecolor");
             superAttackButton.GetComponent<UIShiny>().enabled = true;
@@ -84,6 +86,7 @@ public class SuperAttackManager : MonoBehaviour
         }
         if (buttonB.IsDown())
         {
+            isSuperAttack = true;
             Debug.Log("SuperAttackOn");
             superAttackButtonAudio.Play();
             SuperAttackImageCutin.SetTrigger("SuperAttack");
@@ -104,15 +107,6 @@ public class SuperAttackManager : MonoBehaviour
             {
                 _colorGrading.colorFilter.value = new Color(75 / 255f, 75 / 255f, 75 / 255f);
             }
-
-            //cutinが入って2秒アニメーションとコライダーを止める
-            //System.Threading.Thread.Sleep(2000);
-            //this.transform.localPosition = new Vector3(999f, 999f, 999f);
-            //EarthShatter1.Play();
-            //superattackは先にオフにしておく
-            //SuperAttack.SetActive(true);
-            //this.gameObject.SetActive(false);
-            //superAttackPoint = 0;
         }
         if (waitforcutin)
         {
@@ -172,7 +166,7 @@ public class SuperAttackManager : MonoBehaviour
                     superAttackTrigger.SetActive(true);
                     Earth.SetActive(false);
                     _colorGrading.colorFilter.value = new Color(255 / 255f, 255 / 255f, 255 / 255f);
-
+                    isSuperAttack = false;
                 }
             }
         }

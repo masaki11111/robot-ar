@@ -33,8 +33,8 @@ public class EnemyCreation : MonoBehaviour
     void Update()
     {
 
-        //5対倒すごとに敵を5対増やす
-        if(EnemyNumManagementPoint % 5 == 0 & EnemyNumManagementPoint != 0)
+        //20対倒すごとに敵を5対増やす
+        if(EnemyNumManagementPoint % 20 == 0 & EnemyNumManagementPoint != 0)
         {
             //Debug.Log("enemyCreation");
             for(int l = 0; l < 5; l++)
@@ -62,7 +62,7 @@ public class EnemyCreation : MonoBehaviour
     {
         //地面の4角から敵を生成
         enemyPointNum = Random.Range(1, 85);
-        if (enemyPointNum <20 )
+        if (enemyPointNum <20)
         {
             StartCoroutine("GreenMonsterCreation");
         }
