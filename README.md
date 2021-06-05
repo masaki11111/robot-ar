@@ -11,8 +11,13 @@
 ## 使い方
 <a href="https://shoki-portfolio.studio.site/6">こちら</a>に操作方法がのっています。
 
-## クラス図
+## クラス図  
+結構前の修正前のもの
 ![クラス図](https://github.com/masaki11111/robot-ar/blob/master/plantuml/class/class_2.png)  
+
+修正後
+![クラス図](https://github.com/masaki11111/robot-ar/blob/master/plantuml/class/class_4.png)  
+
 
 ## シーケンス図
 ![シーケンス図](https://github.com/masaki11111/robot-ar/blob/master/plantuml/sequence/sequence.png)  
